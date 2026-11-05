@@ -5,10 +5,16 @@ const num_barcos = 5;
 
 let vacio = new Array(N_filas);
 
+let contador=0;
+
 
  for (let i = 0; i < N_filas ; i++){
         flota[i] = new Array(N_columnas).fill(0);        
     }
+for (let i = 0; i < N_filas ; i++){
+        vacio[i] = new Array(N_columnas).fill(0);        
+    }
+
     let barcos = 0;
 
 do {
@@ -24,11 +30,12 @@ do {
     console.table(flota);
 
         const juego = document.getElementById("juego");
+        const hueco = document.createElement("id");
+
 
         for(let i = 0; i < N_filas; i++){
             for(let j = 0; j < N_columnas; j++){
                 const cuadro_barco = document.createElement("div");
-                const hueco = document.createElement("id");
                     cuadro_barco.classList.add("barco");
                     hueco.id = "hueco"+i+"_"+j;                    
                     cuadro_barco.id = "barco"+i+j;
@@ -40,27 +47,37 @@ do {
             }
         }
 
+        console.log(contador);
+        
+
 function disprar_barco(){
+
+    if (contador < 3){
     let fila = window.prompt("Introduce la fila: ");
     let columna = window.prompt("Introduce la columna: ");
     
-    do {
+    
+    
         if(fila <= 14 && fila >= 0 && columna <= 14 && columna >= 0){
-            vacio.push(flota[fila][columna] == 1);
-            // if(vacio[fila][columna] == 1){
+
+            if(vacio[fila][columna] == 0){
 
                 if(flota[fila][columna] == 1){
+                    
                 document.getElementById("barco"+fila+columna).classList.add("hundido");
+                contador++;
                 }else {
-                    document.getElementById("barco"+fila+columna).classList.add("ocupada");
+                    document.getElementById("barco"+fila+columna).classList.add("ocupada");vacio[fila][columna] = 1;
                 }
-            // }else {
-            //     window.alert("No se puede")
-            // }
+            }else {
+                window.alert("No se puede")
+            }
             
     } else {
         window.alert("Error no esta en el rango de posiciones");
-    }
-    } while (barcos === 3);3
-    
+    }        
+
+} else {
+    document.getElementById("id_boton").disabled = true;
+}
 }
